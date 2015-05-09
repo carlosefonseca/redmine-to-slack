@@ -1,0 +1,1 @@
+worker:  bundle exec ./redmine-to-slack.rb
