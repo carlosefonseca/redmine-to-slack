@@ -118,15 +118,15 @@ module RedmineSlack
       issues = @redmine_api.issues(created_on: ">=#{last_creation}", limit:200, sort:"created_on")['issues']
       puts issues if self.verbose
       
+      # filter issues to include only certain projects, avoid certain users, avoid self tickets
+      issues = issues.select do |issue|
+        Utils.project_whitelisted? issue and Utils.user_not_blacklisted? issue and not Utils.ticket_to_self? issue
+      end
+
       # no issues
       if issues.empty?
         puts "#{Utils.human_timestamp} No new issues since #{last_creation}."
         return
-      end
-
-      # filter issues to include only certain projects, avoid certain users, avoid self tickets
-      issues = issues.select do |issue|
-        Utils.project_whitelisted? issue and Utils.user_not_blacklisted? issue and not Utils.ticket_to_self? issue
       end
 
       # post issues
