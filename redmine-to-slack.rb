@@ -315,7 +315,7 @@ module RedmineSlack
 
     # If issue involves a certain user, don't post
     # (TODO: this list should come from a configuration)
-    @@user_blacklist = ['ricardo.ferreira', 'pedro.morais']
+    @@user_blacklist = ENV['USER_BLACKLIST'].split(',')
     def self.user_not_blacklisted?(issue)
       @@user_blacklist.include? issue["assigned_to"]["name"] or @@user_blacklist.include? issue["author"]["name"]
       # true
