@@ -223,11 +223,11 @@ module RedmineSlack
     end
 
     def post_hello
-      @slack_api.post({:channel=>"@carlos.fonseca",:text=>"Hello! Last creation: #{@kv.get(@last_creation_k)}",:username=>"Redmine2Slack",:icon_url => REDMINE_ICON_URL})
+      #@slack_api.post({:channel=>"@carlos.fonseca",:text=>"Hello! Last creation: #{@kv.get(@last_creation_k)}",:username=>"Redmine2Slack",:icon_url => REDMINE_ICON_URL})
     end
 
     def post_goodbye
-      @slack_api.post({:channel=>"@carlos.fonseca",:text=>"Bye! Last creation: #{@kv.get(@last_creation_k)}",:username=>"Redmine2Slack",:icon_url => REDMINE_ICON_URL})
+      #@slack_api.post({:channel=>"@carlos.fonseca",:text=>"Bye! Last creation: #{@kv.get(@last_creation_k)}",:username=>"Redmine2Slack",:icon_url => REDMINE_ICON_URL})
     end
   end
 
@@ -315,10 +315,10 @@ module RedmineSlack
 
     # If issue involves a certain user, don't post
     # (TODO: this list should come from a configuration)
-    @@user_blacklist = []
+    @@user_blacklist = ['ricardo.ferreira', 'pedro.morais']
     def self.user_not_blacklisted?(issue)
-      # @@user_blacklist.include? issue["assigned_to"]["name"] or @@user_blacklist.include? issue["author"]["name"]
-      true
+      @@user_blacklist.include? issue["assigned_to"]["name"] or @@user_blacklist.include? issue["author"]["name"]
+      # true
     end
 
     # returns a timestamp in pt-PT time
